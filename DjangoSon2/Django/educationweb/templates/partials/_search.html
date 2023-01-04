@@ -1,0 +1,22 @@
+<div class="mx-auto mb-5" style="width: 100%; max-width: 400px">
+  <div class="input-group">
+
+    <form method="get" id="site-searchform" action="{% url 'search' %}">
+      <div>
+        <input
+          type="text"
+          class="form-control border-light"
+          name="search"
+          style="padding: 30px 100px 30px 100px"
+          placeholder="Keyword"
+        />
+        
+      </div>
+      <div class="input-group-append">
+        <!-- <button class="btn btn-secondary px-4 px-lg-5">Search</button> -->
+        <button class="btn btn-secondary btn-lg btn-block" value="Search" type="button">Search</button>
+      </div>
+    </form>
+
+  </div>
+</div>

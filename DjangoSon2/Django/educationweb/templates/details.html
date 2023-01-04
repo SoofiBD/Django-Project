@@ -1,0 +1,220 @@
+{% extends 'base.html' %} {% block content %} {% load static %}
+<!-- Header Start -->
+<div
+  class="jumbotron jumbotron-fluid page-header position-relative overlay-bottom"
+  style="margin-bottom: 90px"
+>
+  <div class="container text-center py-5">
+    <h1 class="text-white display-1">Course Detail</h1>
+    <div class="d-inline-flex text-white mb-5">
+      <p class="m-0 text-uppercase"><a class="text-white" href="{% url 'index' %}">Home</a></p>
+      <i class="fa fa-angle-double-right pt-1 px-3"></i>
+      <p class="m-0 text-uppercase">Course Detail</p>
+    </div>
+    {% include 'partials/_search.html' %}
+  </div>
+</div>
+<!-- Header End -->
+
+<!-- Detail Start -->
+<div class="container-fluid py-5">
+  <div class="container py-5">
+    <div class="row">
+      <div class="col-lg-8">
+        <div class="mb-5">
+          <div class="section-title position-relative mb-5">
+            <h6
+              class="d-inline-block position-relative text-secondary text-uppercase pb-2"
+            >
+              Course Detail
+            </h6>
+            <h1 class="display-4">{{course.course_name}}</h1>
+          </div>
+          <img
+          class="img-rounded" alt="Responsive Image"
+          width="700" height="480"
+            src="{{ course.course_img.url }}"
+            alt="Image"
+          />
+          <p>{{course.course_detail}}</p>
+
+          <p>{{course.course_detail}}</p>
+        </div>
+
+        <h2 class="mb-3">Related Courses</h2>
+        <div
+          class="owl-carousel related-carousel position-relative"
+          style="padding: 0 30px"
+        >
+          {% for course in courselist %}
+          <a
+            class="courses-list-item position-relative d-block overflow-hidden mb-2"
+            href="{% url 'details' course.category.slug course.id %}"
+          >
+            <img
+              class="img-fluid"
+              src="{{ course.course_img.url }}"
+              alt="course image"
+            />
+            <div class="courses-text">
+              <h4 class="text-center text-white px-3">
+                {{course.course_name}}
+              </h4>
+              <div class="border-top w-100 mt-3">
+                <div class="d-flex justify-content-between p-4">
+                  <span class="text-white"
+                    ><i class="fa fa-user mr-2"></i
+                    >{{course.teacher}}</span
+                  >
+                  <span class="text-white"
+                    ><i class="fa fa-star mr-2"></i>{{course.rating}}
+                    <small>(250)</small></span
+                  >
+                </div>
+              </div>
+            </div>
+          </a>
+          {% endfor %}
+        </div>
+      </div>
+
+      <div class="col-lg-4 mt-5 mt-lg-0">
+        <div class="bg-primary mb-5 py-3">
+          <h3 class="text-white py-3 px-4 m-0">Course Features</h3>
+          <div class="d-flex justify-content-between border-bottom px-4">
+            <h6 class="text-white my-3">Instructor</h6>
+            <h6 class="text-white my-3">{{course.teacher.name}}</h6>
+          </div>
+          <div class="d-flex justify-content-between border-bottom px-4">
+            <h6 class="text-white my-3">Rating</h6>
+            <h6 class="text-white my-3">
+              {{course.rating}}<small>(250)</small>
+            </h6>
+          </div>
+          <div class="d-flex justify-content-between border-bottom px-4">
+            <h6 class="text-white my-3">Lectures</h6>
+            <h6 class="text-white my-3">15</h6>
+          </div>
+          <div class="d-flex justify-content-between border-bottom px-4">
+            <h6 class="text-white my-3">Duration</h6>
+            <h6 class="text-white my-3">10.00 Hrs</h6>
+          </div>
+          <div class="d-flex justify-content-between border-bottom px-4">
+            <h6 class="text-white my-3">Skill level</h6>
+            <h6 class="text-white my-3">{{course.skill_level}}</h6>
+          </div>
+          <div class="d-flex justify-content-between px-4">
+            <h6 class="text-white my-3">Language</h6>
+            <h6 class="text-white my-3">{{course.Language}}</h6>
+          </div>
+          <h5 class="text-white py-3 px-4 m-0">Course Price: ${{course.course_price}}</h5>
+          <div class="py-3 px-4">
+            {% if user.is_authenticated %}
+            <a
+              class="btn btn-block btn-secondary py-3 px-5"
+              data-toggle="modal"
+              data-target="#enrollModal"
+              href=""
+              >Enroll Now</a
+            >
+            {% endif %}
+          </div>
+        </div>
+
+        <div class="mb-5">
+          <h2 class="mb-3">Categories</h2>
+          <ul class="list-group list-group-flush">
+            {% for category in categories %}
+            <li
+              class="list-group-item d-flex justify-content-between align-items-center px-0"
+            >
+              <a
+                href="{% url 'category_details' category.slug %}"
+                class="text-decoration-none h6 m-0"
+                >{{category.name}}</a
+              >
+              <span class="badge badge-primary badge-pill"></span>
+            </li>
+            {% endfor %}
+          </ul>
+        </div>
+
+        <div class="mb-5">
+          <h2 class="mb-4">Recent Courses</h2>
+          {% for course in courselist %}
+          <a
+            class="d-flex align-items-center text-decoration-none mb-4"
+            href=""
+          >
+            <img
+              class="img-fluid rounded"
+              src="{% static 'img/courses-80x80.jpg' %}"
+              alt=""
+            />
+            <div class="pl-3">
+              <h6>{{course.course_name}}</h6>
+              <div class="d-flex">
+                <small class="text-body mr-3"
+                  ><i class="fa fa-user text-primary mr-2"></i
+                  >{{course.teacher}}</small
+                >
+                <small class="text-body"
+                  ><i class="fa fa-star text-primary mr-2"></i
+                  >{{course.rating}}</small
+                >
+              </div>
+            </div>
+          </a>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Detail End -->
+
+<div
+  class="modal fade"
+  id="enrollModal"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="enrollModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 class="modal-title" id="enrollModalLabel">Enroll The Course</h2>
+        <button type="button" class="close" data-dismiss="modal">
+          <span>&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p>You will enroll the course below:</p>
+        <h1>{{course.course_name}}</h1>
+      </div>
+      <div class="modal-footer">
+        <form action="{% url 'enroll_the_course' %}" method="POST">
+          {% csrf_token %}
+          
+          <input name="Card Number" id="ccn" type="tel" inputmode="numeric" pattern="[0-9\s]{13,19}" autocomplete="cc-number" maxlength="19" placeholder="xxxx xxxx xxxx xxxx">
+          <input name="credit-expires" class="cc-expires" type="tel" pattern="\d*" maxlength="7" placeholder="MM / YY">
+          <input name="credit-cvc" class="cc-cvc" type="tel" pattern="\d*" maxlength="4" placeholder="CVC">
+          
+        </form>
+        <form action="{% url 'enroll_the_course' %}" method="POST">
+          {% csrf_token %}
+          <input type="hidden" name="user_id" value="{{user.id}}" />
+          <input type="hidden" name="course_id" value="{{course.id}}" />
+          <input type="submit" value="I AM SURE" class="btn btn-success" />
+        </form>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">
+          CANCEL
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}
+<!-- src="{{ course.course_img.url }}" -->
