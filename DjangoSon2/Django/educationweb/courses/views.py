@@ -47,28 +47,3 @@ def search(request):
 
     return render(request , 'courses.html' , context)
 
-
-
-
-# def courses(request):
-#     courselist = Course.objects.all().order_by('-date')
-#     categories = Category.objects.all()
-#     context = {
-#         'courselist':courselist,
-#         'categories':categories
-#     }
-#     return render(request, "courses.html" , context)   
-
-
-# def category_details(request , category_slug):
-#     courses = Course.objects.all().filter(category__slug = category_slug)
-#     categories = Category.objects.all()
-#     context = {
-#         'courses' : courses,
-#         'categories' : categories
-#     }
-#     return render(request, "courses.html" , context)
-
-
-
-# Create your views here.
